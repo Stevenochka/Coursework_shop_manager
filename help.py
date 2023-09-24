@@ -1,5 +1,6 @@
 from base import *
 from tabulate import tabulate
+import matplotlib.pyplot as plt
 
 
 class Shop_helper:
@@ -88,13 +89,15 @@ class Shop_helper:
         print(tabulate(self.__report_of_gain(), headers=['Товар', 'Кол-во продаж', 'Выручка, руб',
                                                          'Процент от общей выручки, %']))
 
-
-
-
-
-
-
-
+    #Функция по реализации диаграммы
+    def diagram(self):
+        names = [self.table[key]["name"] for key in self.table.keys()]
+        data = [self.percentages(self.table[key]["all_price"]) for key in self.table.keys()]
+        plt.title("Отчет об выручке магазина")
+        plt.pie(data, labels= None, autopct='%1.1f%%')
+        plt.axis('equal')
+        plt.legend(labels=names )
+        plt.show()
 
 
 
