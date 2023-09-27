@@ -1,6 +1,7 @@
 from base import *
 from tabulate import tabulate
 import matplotlib.pyplot as plt
+from sys import stdin
 
 
 class Shop_helper:
@@ -93,13 +94,39 @@ class Shop_helper:
     def diagram(self):
         names = [self.table[key]["name"] for key in self.table.keys()]
         data = [self.percentages(self.table[key]["all_price"]) for key in self.table.keys()]
+        bubble_sort(data, 1)
         plt.title("Отчет об выручке магазина")
         plt.pie(data, labels= None, autopct='%1.1f%%')
         plt.axis('equal')
-        plt.legend(labels=names )
+        plt.legend(labels=names, loc= 'center right')
         plt.show()
 
 
+    #Функция поиска товара по индексу
+    def search_by_index(self, index):
+        indexes = [i for i in self.table.keys()]
+        bubble_sort(indexes)
+        if binary_search(indexes, index):
+            print(f'Данный товар присутствует в базе данных')
+            print("Хотите просмотреть информацию? (Да/нет)")
+            answear = stdin.read().strip("\n")
+            if answear == "Да" or answear == 'да':
+                print(self.table[index])
+        else:
+            print(f"Товар не найден в базе данных")
+
+
+    #Функция отслеживающая кол-во продаж товара такого-то производителя
+    def search_productmaker(self, maker):
+        count = 0
+        for key in self.table.keys():
+            if len(knut_moris_prat(self.table[key]["name"], maker)) > 0:
+                count += 1
+
+        if count > 0:
+            print(f"Магазин за все время продал продукцию {maker} в таком количистве - {count}")
+        else:
+            print(f"Машазин не продавал продукт от производителя {maker}")
 
 
 '''

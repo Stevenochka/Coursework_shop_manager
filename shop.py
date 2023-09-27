@@ -8,6 +8,12 @@ def main():
     print()
     print(table.most_all_price())
     print(table.most_sales())
+    print()
+    table.info()
+    print()
+    table.search_by_index(4002)
+    print()
+    table.search_productmaker('Samsung')
     table.diagram()
 
 
